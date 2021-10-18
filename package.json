@@ -1,0 +1,26 @@
+{
+  "name": "232",
+  "version": "1.0.0",
+  "description": "**MOVIE IT**",
+  "default": "src/index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DaniLott1988/movieIt_client.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DaniLott1988/movieIt_client/issues"
+  },
+  "homepage": "https://github.com/DaniLott1988/movieIt_client#readme",
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.0.0-rc.0"
+  }
+}
