@@ -22790,7 +22790,7 @@ class MainView extends _reactDefault.default.Component {
             },
             __self: this
         }));
-        if (user === "") return(/*#__PURE__*/ _jsxRuntime.jsx(_loginView.LoginView, {
+        if (!user) return(/*#__PURE__*/ _jsxRuntime.jsx(_loginView.LoginView, {
             onLoggedIn: (user1)=>this.onLoggedIn(user1)
             ,
             __source: {
@@ -22827,7 +22827,7 @@ class MainView extends _reactDefault.default.Component {
             }) : movies.map((movie)=>/*#__PURE__*/ _jsxRuntime.jsx(_movieCard.MovieCard, {
                     movie: movie,
                     onMovieClick: (newSelectedMovie)=>{
-                        this.setSelectedMovie(newSelectedMovie);
+                        this.setSelectedMovie(movie);
                     },
                     __source: {
                         fileName: "src/components/main-view/main-view.jsx",
@@ -25621,8 +25621,8 @@ function LoginView(props) {
                 ]
             }),
             /*#__PURE__*/ _jsxRuntime.jsx("button", {
-                type: "button",
-                onClick: this.handleSubmit,
+                type: "submit",
+                onClick: handleSubmit,
                 __source: {
                     fileName: "src/components/login-view/login-view.jsx",
                     lineNumber: 22
@@ -25775,7 +25775,7 @@ function RegistrationView(props) {
             }),
             /*#__PURE__*/ _jsxRuntime.jsx("button", {
                 type: "submit",
-                onClick: this.handleSubmit,
+                onClick: handleSubmit,
                 __source: {
                     fileName: "src/components/registration-view/registration-view.jsx",
                     lineNumber: 32
@@ -25789,6 +25789,12 @@ function RegistrationView(props) {
 _s(RegistrationView, "VckGdZc6U9MxDgevDNheN30OMf8=");
 _c = RegistrationView;
 RegistrationView.propTypes = {
+    register: _propTypesDefault.default.shape({
+        Username: _propTypesDefault.default.string.isRequired,
+        Password: _propTypesDefault.default.string.isRequired,
+        Email: _propTypesDefault.default.string.isRequired,
+        Birth_date: _propTypesDefault.default.string.isRequired
+    }),
     onRegistration: _propTypesDefault.default.func.isRequired
 };
 var _c;

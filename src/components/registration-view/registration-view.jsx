@@ -15,25 +15,31 @@ export function RegistrationView(props) {
     <form>
       <label className="username">
         Username:
-        <input type="text" value={Username} onChange={(e) => setUsername(e.target.value)} />
+        <input type="text" value={Username} onChange={e => setUsername(e.target.value)} />
       </label>
       <label className="password">
         Password:
-        <input type="password" value={Password} onChange={(e) => setPassword(e.target.value)} />
+        <input type="password" value={Password} onChange={e => setPassword(e.target.value)} />
       </label>
       <label className="email">
         Email:
-        <input type="email" value={Email} onChange={(e) => setEmail(e.target.value)} />
+        <input type="email" value={Email} onChange={e => setEmail(e.target.value)} />
       </label>
       <label className="birth_date">
         Birth_date:
-        <input type="date" value={Birth_date} onChange={(e) => setBirth_date(e.target.value)} />
+        <input type="date" value={Birth_date} onChange={e => setBirth_date(e.target.value)} />
       </label>
-      <button type="submit" onClick={this.handleSubmit}>Submit</button>
+      <button type="submit" onClick={handleSubmit}>Submit</button>
     </form>
   );
 }
 
 RegistrationView.propTypes = {
+  register: PropTypes.shape({
+    Username: PropTypes.string.isRequired,
+    Password: PropTypes.string.isRequired,
+    Email: PropTypes.string.isRequired,
+    Birth_date: PropTypes.string.isRequired
+  }),
   onRegistration: PropTypes.func.isRequired,
 };
