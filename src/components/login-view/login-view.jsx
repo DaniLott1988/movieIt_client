@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import PropTypes from "prop-types";
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import { Form, Button, Card, CardGroup, Container, Col, Row } from 'react-bootstrap';
+
+import './login-view.scss';
 
 export function LoginView(props) {
   const [Username, setUsername] = useState("");
@@ -11,29 +11,31 @@ export function LoginView(props) {
     console.log(Username, Password);
     props.onLoggedIn(Username);
   };
-
   return (
-    <Form>
-      <Form.Group controlId="formUsername">
-        <Form.Label>Username:</Form.Label>
-        <Form.Control type="text" onChange={e => setUsername(e.target.value)} />
-      </Form.Group>
+    <Container>
+      <Row>
+        <Col className="justify-content-md-center">
+          <CardGroup>
+            <Card>
+              <Card.Header>Please LogIn:</Card.Header>
+              <Form>
+                <Form.Group>
+                  <Form.Label>Username:</Form.Label>
+                  <Form.Control type="text" value={Username} required placeholder="Please write here your Username" onChange={e => setUsername(e.target.value)} />
+                </Form.Group>
       
-      <Form>
-      <Form.Group controlId="formPassword">
-        <Form.Label>Password:</Form.Label>
-        <Form.Control type="password" onChange={e => setPassword(e.target.value)} />
-      </Form.Group>
+                <Form.Group>
+                  <Form.Label>Password:</Form.Label>
+                  <Form.Control type="password" value={Password} required placeholder="Please write here your password" onChange={e => setPassword(e.target.value)} />
+                </Form.Group>
 
-      <Button variant="primary" type="submit" onClick={handleSubmit}>Submit</Button>
-    </Form>
+                <Button variant="primary" type="submit" onClick={handleSubmit}>Submit</Button>
+                
+              </Form>
+            </Card>
+          </CardGroup>
+        </Col>
+      </Row>
+    </Container>
   );
 }
-
-LoginView.propTypes = {
-  user: PropTypes.shape({
-    Username: PropTypes.string.isRequired,
-    Password: PropTypes.string.isRequired,
-  }),
-  onLoggedIn: PropTypes.func.isRequired,
-};
