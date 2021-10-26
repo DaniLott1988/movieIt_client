@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/DaniLott1988/movieIt_client#readme",
   "dependencies": {
+    "@babel/runtime": "^7.15.4",
     "@parcel/core": "^2.0.0",
     "axios": "^0.23.0",
     "prop-types": "^15.7.2",
