@@ -10,10 +10,51 @@ export function RegistrationView(props) {
   const [Password, setPassword] = useState("");
   const [Email, setEmail] = useState("");
   const [Birth_date, setBirth_date] = useState("");
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(Username, Password, Email, Birth_date);
-    props.onRegistration(Username);
+    axios.post('https://movie-it-1986.herokuapp.com/users', {
+      Username: Username,
+      Password: Password,
+      Email: Email,
+      Birth_date: Birth_date
+    })
+    .then(response => {
+      const data = response.data;
+      console.log(data);
+      window.open('/', 'self');
+    })
+    .catch(e => {
+      console.log('There was an error when registering the user.')
+    });
+  };
+
+  const validate = (e) => {
+    const usernameError = {}
+    const passwordError = {}
+    const emailError = {}
+    let isValid = true;
+
+    if (Username.isAlphanumeric) {
+      usernameError = "Username must only be of alphanumeric characters."
+      isValid = false;
+    }
+
+    if (Password.trim().length < 9) {
+      passwordError = "Password must have a minimum of 9 characters."
+      isValid = false;
+    }
+
+    if (!email.includes("@") ) {
+      emailError = "Please enter a valid email address."
+      isValid = false;
+    }
+
+    setUsernameError(usernameError);
+    setPasswordError(passwordError);
+    setEmailError(emailError);
+    return isValid;
+
   }
 
   return (

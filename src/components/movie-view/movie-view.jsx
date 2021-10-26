@@ -1,22 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Button } from 'react-bootstrap';
 
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 import './movie-view.scss';
 
 export class MovieView extends React.Component {
 
-  keypressCallback(event) {
-    console.log(event.key);
+  constructor(props) {
+    super(props);
   }
 
-  componentDidMount() {
-    document.addEventListener('keypress', this.keypressCallback);
-  }
+  addFavorite_Movie(_id) {
+    const token = localStorage.getItem('token');
+    const user = localStorage.getItem('user');
 
-  componentWillUnmount() {
-    document.removeEventListener('keypress', this.keypressCallback);
-  }
+    axios.post(`https://movie-it-1986.herokuapp.com/users/${user}/favorites/${this.props.movie._id}`, {}, {
+      headers: {Authorization: `Bearer $(token)` },
+      method: 'POST'
+    })
+    .then(response => {
+      alert(`Added to Favorites`)
+    })
+    .catch(function (error){
+      console.log(error);
+    });
+  };
 
   render() {
     const { movie, onBackClick } = this.props;
@@ -26,7 +36,7 @@ export class MovieView extends React.Component {
         <Col md={8}>
           
           <div className="movie-poster">
-            <img src={movie.ImagePath} />
+            <img src={movie.ImagePath} crossOrigin="anonymous" />
           </div>
           
           <div className="movie-title">
@@ -45,12 +55,16 @@ export class MovieView extends React.Component {
           </div>
           
           <div className="movie-genre">
-            <span className="label">Genre: </span>
+            <Link to={`/genres/${movie.Genre.Name}`}>
+              <Button variant="link">Genre: </Button>
+            </Link>
             <span className="value">{movie.Genre.Name}</span>
           </div>
           
           <div className="movie-director">
-            <span className="label">Director: </span>
+            <Link to={`/directors/${movie.Director.Name}`}>
+              <Button variant="link">Director: </Button>
+            </Link>
             <span className="value">{movie.Director.Name}</span>
           </div>
           
@@ -59,7 +73,9 @@ export class MovieView extends React.Component {
             <span className="value">{movie.Featured}</span>
           </div>
           
-          <button onClick={() => { onBackClick(null); }}>Back</button>
+          <Button variant="secondary" className="favButton" value={movie._id} onClick={(e) => this.addFavorite_Movie(e, movie)}>Add Movie to Favorites</Button>
+
+          <Button variant="primary" onClick={() => { onBackClick(null); }}>Back</Button>
         
         </Col>
       </Row>
