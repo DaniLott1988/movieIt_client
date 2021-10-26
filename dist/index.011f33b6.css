@@ -52,6 +52,14 @@ h2 {
 h3 {
   font-size: 18px;
 }
+
+.Card {
+  position: relative;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: auto;
+  margin-top: 75px;
+}
 body {
   padding: 10px;
   margin: 10px;
@@ -72,6 +80,14 @@ h2 {
 
 h3 {
   font-size: 18px;
+}
+
+.Card {
+  position: relative;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: auto;
+  margin-top: 75px;
 }
 
 body {

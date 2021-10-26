@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col, Button } from 'react-bootstrap';
+import { Row, Col, Button, Card } from 'react-bootstrap';
 
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -34,49 +34,50 @@ export class MovieView extends React.Component {
     return (
       <Row className="movie-view justify-content-md-center">
         <Col md={8}>
+          <Card className="Card">
+            <div className="movie-poster">
+              <img src={movie.ImagePath} crossOrigin="anonymous" />
+            </div>
           
-          <div className="movie-poster">
-            <img src={movie.ImagePath} crossOrigin="anonymous" />
-          </div>
-          
-          <div className="movie-title">
-            <span className="label">Title: </span>
-            <span className="value">{movie.Title}</span>
-          </div>
+            <div className="movie-title">
+              <span className="label">Title: </span>
+              <span className="value">{movie.Title}</span>
+            </div>
 
-          <div className="movie-description">
-            <span className="label">Description: </span>
-            <span className="value">{movie.Description}</span>
-          </div>
+            <div className="movie-description">
+              <span className="label">Description: </span>
+              <span className="value">{movie.Description}</span>
+            </div>
 
-          <div className="movie-release-year">
-            <span className="label">Release_Year: </span>
-            <span className="value">{movie.Release_Year}</span>
-          </div>
+            <div className="movie-release-year">
+              <span className="label">Release_Year: </span>
+              <span className="value">{movie.Release_Year}</span>
+            </div>
           
-          <div className="movie-genre">
-            <Link to={`/genres/${movie.Genre.Name}`}>
-              <Button variant="link">Genre: </Button>
-            </Link>
-            <span className="value">{movie.Genre.Name}</span>
-          </div>
+            <div className="movie-genre">
+              <Link to={`/genres/${movie.Genre.Name}`}>
+                <Button variant="link">Genre: </Button>
+              </Link>
+              <span className="value">{movie.Genre.Name}</span>
+            </div>
           
-          <div className="movie-director">
-            <Link to={`/directors/${movie.Director.Name}`}>
-              <Button variant="link">Director: </Button>
-            </Link>
-            <span className="value">{movie.Director.Name}</span>
-          </div>
+            <div className="movie-director">
+              <Link to={`/directors/${movie.Director.Name}`}>
+                <Button variant="link">Director: </Button>
+              </Link>
+              <span className="value">{movie.Director.Name}</span>
+            </div>
           
-          <div className="movie-featured">
-            <span className="label">Featured: </span>
-            <span className="value">{movie.Featured}</span>
-          </div>
+            <div className="movie-featured">
+              <span className="label">Featured: </span>
+              <span className="value">{movie.Featured}</span>
+            </div>
           
-          <Button variant="secondary" className="favButton" value={movie._id} onClick={(e) => this.addFavorite_Movie(e, movie)}>Add Movie to Favorites</Button>
+            <Button variant="secondary" className="favButton" value={movie._id} onClick={(e) => this.addFavorite_Movie(e, movie)}>Add Movie to Favorites</Button>
 
-          <Button variant="primary" onClick={() => { onBackClick(null); }}>Back</Button>
+            <Button variant="primary" onClick={() => { onBackClick(null); }}>Back</Button>
         
+          </Card>
         </Col>
       </Row>
     );

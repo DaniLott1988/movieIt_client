@@ -11,31 +11,43 @@ export function RegistrationView(props) {
   const [Email, setEmail] = useState("");
   const [Birth_date, setBirth_date] = useState("");
 
+  const [nameError, setNameError] = useState({});
+  const [usernameError, setUsernameError] = useState({});
+  const [passwordError, setPasswordError] = useState({});
+  const [emailError, setEmailError] = useState({});
+  const [birth_dateError, setBirth_dateError] = useState({});
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('https://movie-it-1986.herokuapp.com/users', {
-      Username: Username,
-      Password: Password,
-      Email: Email,
-      Birth_date: Birth_date
-    })
-    .then(response => {
-      const data = response.data;
-      console.log(data);
-      window.open('/', 'self');
-    })
-    .catch(e => {
-      console.log('There was an error when registering the user.')
-    });
-  };
+    let setisValid = formValidation();
+    if (setisValid) {
+      axios.post('https://movie-it-1986.herokuapp.com/users', {
+        Username: Username,
+        Password: Password,
+        Email: Email,
+        Birth_date: Birth_date
+      })
+      .then(response => {
+        const data = response.data;
+        console.log(data);
+        window.open('/', 'self');
+      })
+      .catch(e => {
+        console.log('There was an error when registering the user.')
+      });
+    };
+  }
+    
 
-  const validate = (e) => {
-    const usernameError = {}
-    const passwordError = {}
-    const emailError = {}
+  const validate = () => {
+    let usernameError = {}
+    let passwordError = {}
+    let emailError = {}
+    let birth_dateError = {}
     let isValid = true;
 
-    if (Username.isAlphanumeric) {
+    if (Username.trim().length < 5) {
       usernameError = "Username must only be of alphanumeric characters."
       isValid = false;
     }
@@ -45,8 +57,13 @@ export function RegistrationView(props) {
       isValid = false;
     }
 
-    if (!email.includes("@") ) {
+    if (Email.includes("@") ) {
       emailError = "Please enter a valid email address."
+      isValid = false;
+    }
+
+    if (Birth_date === '' ) {
+      birth_dateError = "Please enter your date of Birth."
       isValid = false;
     }
 

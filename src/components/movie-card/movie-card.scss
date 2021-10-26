@@ -16,3 +16,11 @@ h2 {
 h3 {
 	font-size: 18px;
 }
+
+.Card {
+	position: relative;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	margin: auto;
+	margin-top: 75px;
+}
