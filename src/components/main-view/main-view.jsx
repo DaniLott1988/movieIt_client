@@ -142,7 +142,7 @@ export class MainView extends React.Component {
             </Col>
           )}} />
 
-          <Route path="/movies/:movieId" render={({ match }) => {
+          <Route path="/movies/:movieId" render={({ match, history }) => {
             if (!user) return <Col>
               <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
             </Col>
