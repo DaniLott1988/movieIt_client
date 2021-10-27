@@ -26,6 +26,42 @@ export class MainView extends React.Component {
     };
   }
 
+  componentDidMount(){
+    let accessToken = localStorage.getItem('token');
+    if (accessToken !== null) {
+      this.setState ({
+        user: localStorage.getItem('user')
+      });
+      this.getMovies(accessToken);
+    }
+  }
+
+  onLoggedIn(authData) {
+    console.log(authData);
+    this.setState({
+      user: authData.user.Username
+    });
+
+    localStorage.setItem('token', authData.token);
+    localStorage.setItem('user', authData.user.Username);
+    this.getMovies(authData.token);
+  }
+
+  getUsers(token) {
+    axios.get(`https://movie-it-1986.herokuapp.com/users`, {
+      headers: { Authorization: `Bearer $(token)` },
+    })
+    .then((response) => {
+      this.setState ({
+        users: response.data
+      });
+      console.log(response)
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
   getMovies(token) {
     axios.get('https://movie-it-1986.herokuapp.com/movies', {
       headers: { Authorization: `Bearer ${token} `}
@@ -40,59 +76,10 @@ export class MainView extends React.Component {
     });
   }
 
-  getUser(token) {
-    axios.get(`https://movie-it-1986.herokuapp.com/users/$(Username)`, {
-      headers: { Authorization: `Bearer $(token)` },
-    })
-    .then((response) => {
-      this.setState ({
-        Username: response.data.Username,
-        Password: response.data.Password,
-        Email: response.data.Email,
-        Birth_date: response.data.Birth_date,
-        Favorite_Movies: response.data.Favorite_Movies,
-      });
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-  }
-
-  componentDidMount(){
-    let accessToken = localStorage.getItem('token');
-    if (accessToken !== null) {
-      this.setState ({
-        user: localStorage.getItem('user')
-      });
-      this.getMovies(accessToken);
-    }
-
-    axios.get('https://movie-it-1986.herokuapp.com/movies')
-    .then(response => {
-      this.setState({
-        movies: response.data
-      });
-    })
-    .catch(error => {
-      console.log(error);
-    });
-  }
-
   onRegistration(register) {
     this.setState({
       register,
     });
-  }
-
-  onLoggedIn(authData) {
-    console.log(authData);
-    this.setState({
-      user: authData.user.Username
-    });
-
-    localStorage.setItem('token', authData.token);
-    localStorage.setItem('user', authData.user.Username);
-    this.getMovies(authData.token);
   }
 
   onLoggedOut() {
@@ -174,10 +161,9 @@ export class MainView extends React.Component {
           }} />
 
           <Route path="/profile" render={() => { 
-            if (!user) return
-              <Col>
-                <ProfileView /> 
-              </Col>
+            if (!user) return <Col>
+              <ProfileView /> 
+            </Col>
           }} />
 
         </Row>

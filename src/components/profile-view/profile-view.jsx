@@ -34,7 +34,6 @@ export class ProfileView extends React.Component {
     })
       .then((response) => {
         this.setState({
-          Name: response.data.Name,
           Username: response.data.Username,
           Password: response.data.Password,
           Email: response.data.Email,
@@ -89,7 +88,6 @@ export class ProfileView extends React.Component {
     axios.put(`https://movie-it-1986.herokuapp.com/users/${Username}`, {
       headers: { Authorization: `Bearer ${token}` },
       data: {
-        Name: newName ? newName : this.state.Name,
         Username: newUsername ? newUsername : this.state.Username,
         Password: newPassword ? newPassword : this.state.Password,
         Email: newEmail ? newEmail : this.state.Email,
@@ -111,9 +109,6 @@ export class ProfileView extends React.Component {
       .catch(function (error) {
         console.log(error);
       });
-  }
-  setName(input) {
-    this.Name = input;
   }
 
   setUsername(input) {
