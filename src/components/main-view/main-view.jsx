@@ -137,11 +137,10 @@ export class MainView extends React.Component {
           }} />
 
           <Route path="/register" render={() => {
-            if (user) return <Redirect to="/" />
-            return <Col>
+            if (user) return ( <Col>
               <RegistrationView />
             </Col>
-          }} />
+          )}} />
 
           <Route path="/movies/:movieId" render={({ match }) => {
             if (!user) return <Col>
@@ -163,13 +162,13 @@ export class MainView extends React.Component {
             </Col>
           }} />
 
-          <Route path="/director/:name" render={({ match, history }) => {
+          <Route path="/directors/:name" render={({ match, history }) => {
             if (!user) return <Col>
               <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
             </Col>
             if (movies.length === 0) return <div className="main-view" />;
             return <Col md={8}>
-              <DirectorView genre={movies.find(m => m.Director.Name === match.params.name).Director} onBackClick={() => history.goBack()}/>
+              <DirectorView director={movies.find(m => m.Director.Name === match.params.name).Director} onBackClick={() => history.goBack()}/>
             </Col>
           }} />
 

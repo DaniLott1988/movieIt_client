@@ -6,12 +6,12 @@ import { Form, Button, Card, CardGroup, Container, Col, Row } from 'react-bootst
 import './registration-view.scss';
 
 export function RegistrationView(props) {
+
   const [Username, setUsername] = useState("");
   const [Password, setPassword] = useState("");
   const [Email, setEmail] = useState("");
   const [Birth_date, setBirth_date] = useState("");
 
-  const [nameError, setNameError] = useState({});
   const [usernameError, setUsernameError] = useState({});
   const [passwordError, setPasswordError] = useState({});
   const [emailError, setEmailError] = useState({});

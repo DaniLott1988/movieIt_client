@@ -152,7 +152,7 @@ export class ProfileView extends React.Component {
       }
 
    render() {
-    const { movies, user, Username, Email, Password, Birth_date, Favorite_Movies } = this.props;
+    const { movies } = this.props;
 
     return(
       <Container className="ProfileView">
