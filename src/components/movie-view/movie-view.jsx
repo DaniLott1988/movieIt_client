@@ -48,6 +48,11 @@ export class MovieView extends React.Component {
               <span className="label">Description: </span>
               <span className="value">{movie.Description}</span>
             </div>
+
+            <div className="movie-year">
+              <span className="label">Release Year: </span>
+              <span className="value">{movie.Release_Year}</span>
+            </div>
           
             <div className="movie-genre">
               <Link to={`/genres/${movie.Genre.Name}`}>
@@ -83,6 +88,7 @@ MovieView.propTypes = {
   movie: PropTypes.shape({
     Title: PropTypes.string.isRequired,
     Description: PropTypes.string.isRequired,
+    Release_Year: PropTypes.number.isRequired,
     ImagePath: PropTypes.string.isRequired,
     Genre: PropTypes.shape({
       Name: PropTypes.string.isRequired,
