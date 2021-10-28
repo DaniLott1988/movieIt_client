@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import { Form, Button, Card, CardGroup, Container, Col, Row } from 'react-bootstrap';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import axios from 'axios';
+import { useHistory } from "react-router-dom";
 import { Link } from 'react-router-dom';
 
 import './login-view.scss';
 
 export function LoginView(props) {
+  let history = useHistory();
   const [Username, setUsername] = useState("");
   const [Password, setPassword] = useState("");
   const handleSubmit = (e) => {
@@ -42,10 +44,8 @@ export function LoginView(props) {
                   <Form.Control type="password" value={Password} required placeholder="Please write here your password" onChange={e => setPassword(e.target.value)} />
                 </Form.Group>
 
-                <Router>
-                  <Link to={`/register`}>
-                    <Button className='registrationButton' variant='link'>Register</Button>
-                  </Link>
+                <Router> 
+                    <Button className='registrationButton' onClick={() => history.push("/register")}>Register</Button>
                 </Router>
 
                 <Button variant="primary" type="submit" onClick={handleSubmit}>Submit</Button>
