@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import { Button, Card, Col, Form, Row, Container } from 'react-bootstrap';
+import { Button, Card, Col, Form, Row } from 'react-bootstrap';
 import './profile-view.scss';
 
 
 export class ProfileView extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       Username: null,
@@ -45,14 +45,12 @@ export class ProfileView extends React.Component {
       });
   }
 
-
-  removeFavouriteMovie() {
+  removeFavouriteMovie(_id) {
     const token = localStorage.getItem('token');
     const Username = localStorage.getItem('user');
 
-
     axios
-      .delete(`https://movie-it-1986.herokuapp.com/users/${Username}/movies/${movie._id}`, {
+      .delete(`https://movie-it-1986.herokuapp.com/users/${Username}/movies/${_id}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then(() => {
@@ -65,7 +63,7 @@ export class ProfileView extends React.Component {
     // .then(() => window.location.reload());
   }
 
-  handleUpdate(e, newName, newUsername, newPassword, newEmail, newBirthdate) {
+  handleUpdate(e, newUsername, newPassword, newEmail, newBirth_date) {
     this.setState({
       validated: null,
     });
@@ -122,7 +120,7 @@ export class ProfileView extends React.Component {
     this.Email = input;
   }
 
-  setBirthdate(input) {
+  setBirth_date(input) {
     this.Birth_date = input;
   }
 
@@ -151,28 +149,29 @@ export class ProfileView extends React.Component {
     const { movies } = this.props;
 
     return (
+
       <Row className="profile-view">
         <Card className="profile-card">
           <h2>Favorites Movies</h2>
           <Card.Body>
             {Favorite_Movies.length === 0 && <div className="text-center">No Favorite Movies Yet</div>}
 
-            <div className="favorites-movies ">
+            <div className="favorites-movies">
               {Favorite_Movies.length > 0 &&
                 movies.map((movie) => {
-                  if (movie._id === FavoriteMovies.find((favMovie) => favMovie === movie._id)) {
+                  if (movie._id === Favorite_Movies.find((favMovie) => favMovie === movie._id)) {
                     return (
-                      <CardDeck className="movie-card-deck">
-                        <Card className="favorites-item card-content" style={{ width: '16rem' }} key={movie._id}>
-                          <Card.Img style={{ width: '18rem' }} className="movieCard" variant="top" src={movie.ImagePath} />
+                      <Col lg={4} md={4} key={movie._id}>
+                        <Card className="favorites-item card-content">
+                          <Card.Img  className="movieCard" variant="top" src={movie.ImagePath} crossOrigin="anonymous" />
                           <Card.Body>
                             <Card.Title className="movie-card-title">{movie.Title}</Card.Title>
-                            <Button size='sm' className='profile-button remove-favorite' variant='secondary' value={movie._id} onClick={(e) => this.removeFavouriteMovie(e, movie)}>
+                            <Button size='sm' className='profile-button remove-favorite' variant='secondary' value={movie.Title} onClick={(e) => this.removeFavouriteMovie(movie._id)}>
                               Remove
                             </Button>
                           </Card.Body>
                         </Card>
-                      </CardDeck>
+                      </Col>
                     );
                   }
                 })}
@@ -181,7 +180,7 @@ export class ProfileView extends React.Component {
 
           <h1 className="section">Update Profile</h1>
           <Card.Body>
-            <Form noValidate validated={validated} className="update-form" onSubmit={(e) => this.handleUpdate(e, this.Username, this.Password, this.Email, this.Birthdate)}>
+            <Form noValidate validated={validated} className="update-form" onSubmit={(e) => this.handleUpdate(e, this.Username, this.Password, this.Email, this.Birth_date)}>
 
               <Form.Group controlId="formBasicUsername">
                 <Form.Label className="form-label">Username</Form.Label>

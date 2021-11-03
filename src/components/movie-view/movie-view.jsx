@@ -12,13 +12,24 @@ export class MovieView extends React.Component {
     super(props);
   }
 
+  keypressCallback(event) {
+    console.log(event.key);
+  }
+
+  componentDidMount() {
+    document.addEventListener('keypress', this.keypressCallback);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keypress', this.keypressCallback);
+  }
+
   addFavorite_Movie(_id) {
     const token = localStorage.getItem('token');
-    const user = localStorage.getItem('user');
+    const Username = localStorage.getItem('user');
 
-    axios.post(`https://movie-it-1986.herokuapp.com/users/${user}/favorites/${this.props.movie._id}`, {}, {
-      headers: {Authorization: `Bearer $(token)` },
-      method: 'POST'
+    axios.post(`https://movie-it-1986.herokuapp.com/users/${Username}/movies/${this.props.movie._id}`, {}, {
+      headers: {Authorization: `Bearer ${token}` },
     })
     .then(response => {
       alert(`Added to Favorites`)
