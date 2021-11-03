@@ -63,38 +63,24 @@ export class ProfileView extends React.Component {
     // .then(() => window.location.reload());
   }
 
-  handleUpdate(e, newUsername, newPassword, newEmail, newBirth_date) {
-    this.setState({
-      validated: null,
-    });
-
-    const form = e.currentTarget;
-    if (form.checkValidity() === false) {
-      e.preventDefault();
-      e.stopPropagation();
-      this.setState({
-        validated: true,
-      });
-      return;
-    }
+  editUser(e) {
     e.preventDefault();
 
-    const token = localStorage.getItem('token');
     const Username = localStorage.getItem('user');
+    const token = localStorage.getItem('token');
 
     axios.put(`https://movie-it-1986.herokuapp.com/users/${Username}`, {
-      headers: { Authorization: `Bearer ${token}` },
-      data: {
-        Username: newUsername ? newUsername : this.state.Username,
-        Password: newPassword ? newPassword : this.state.Password,
-        Email: newEmail ? newEmail : this.state.Email,
-        Birth_date: newBirth_date ? newBirth_date : this.state.Birth_date,
-      },
+      Username: this.state.Username,
+      Password: this.state.Password,
+      Email: this.state.Email,
+      Birth_date: this.state.Birth_date
+    },
+    {
+      headers: { Authorization: `Bearer ${token}` }
     })
-      .then((response) => {
-        alert('Saved Changes');
+    .then((response) =>{
+      alert('Saved Changes');
         this.setState({
-          Name: response.data.Name,
           Username: response.data.Username,
           Password: response.data.Password,
           Email: response.data.Email,
@@ -108,20 +94,20 @@ export class ProfileView extends React.Component {
       });
   }
 
-  setUsername(input) {
-    this.Username = input;
+  setUsername(value) {
+    this.state.Username = value;
   }
 
-  setPassword(input) {
-    this.Password = input;
+  setPassword(value) {
+    this.state.Password = value;
   }
 
-  setEmail(input) {
-    this.Email = input;
+  setEmail(value) {
+    this.state.Email = value;
   }
 
-  setBirth_date(input) {
-    this.Birth_date = input;
+  setBirth_date(value) {
+    this.state.Birth_date = value;
   }
 
   handleDeleteUser(e) {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Form, Button, Card, CardGroup, Container, Col, Row } from 'react-bootstrap';
+import { Form, Button, Card, CardGroup, Container, Col, Row, Stack } from 'react-bootstrap';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
@@ -33,24 +33,30 @@ export function LoginView(props) {
           <CardGroup>
             <Card>
               <Card.Header>Please LogIn:</Card.Header>
-              <Form>
-                <Form.Group>
-                  <Form.Label>Username:</Form.Label>
-                  <Form.Control type="text" value={Username} required placeholder="Please write here your Username" onChange={e => setUsername(e.target.value)} />
-                </Form.Group>
+              <Stack gap={2} className="col-sm-5 col-md-5 mx-auto">
+                <Form>
+                  <Form.Group>
+                    <Form.Label>Username:</Form.Label>
+                    <Form.Control type="text" value={Username} required placeholder="Please write here your Username" onChange={e => setUsername(e.target.value)} />
+                  </Form.Group>
       
-                <Form.Group>
-                  <Form.Label>Password:</Form.Label>
-                  <Form.Control type="password" value={Password} required placeholder="Please write here your password" onChange={e => setPassword(e.target.value)} />
-                </Form.Group>
+                  <Form.Group>
+                    <Form.Label>Password:</Form.Label>
+                    <Form.Control type="password" value={Password} required placeholder="Please write here your password" onChange={e => setPassword(e.target.value)} />
+                  </Form.Group>
 
-                <Router> 
-                    <Button className='registrationButton' onClick={() => history.push("/register")}>Register</Button>
-                </Router>
+                  <Button variant="primary" type="submit" onClick={handleSubmit}>Submit</Button>
 
-                <Button variant="primary" type="submit" onClick={handleSubmit}>Submit</Button>
+                  <Router>
+                    <p className="mt-5">
+                      Curious? Go ahead and &nbsp;
+                        <Link to="/register" className="btn btn-warning">register</Link>
+                        &nbsp; to join today!
+                    </p>
+                  </Router>
                 
-              </Form>
+                </Form>
+              </Stack>
             </Card>
           </CardGroup>
         </Col>
