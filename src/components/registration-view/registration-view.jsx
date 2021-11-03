@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { Form, Button, Card, CardGroup, Container, Col, Row } from 'react-bootstrap'; 
+import { Form, Button, Card, CardGroup, Container, Col, Row } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 import './registration-view.scss';
 
@@ -40,7 +41,7 @@ export function RegistrationView(props) {
   }
     
 
-  const validate = () => {
+  const formValidation = () => {
     let usernameError = {}
     let passwordError = {}
     let emailError = {}
@@ -102,7 +103,13 @@ export function RegistrationView(props) {
                   <Form.Control type="date" value={Birth_date} required placeholder="Please write here your Birth_date" onChange={e => setBirth_date(e.target.value)} />
                 </Form.Group>
                 
-                <Button variant="primary" type="submit" onClick={handleSubmit}>Submit</Button>
+                <span>
+                  <Button type="submit" onClick={handleSubmit}>Submit</Button>
+                    {' '}
+                    <Link to="/">
+                    <Button variant="secondary" type="button">Back</Button>
+                    </Link>
+                </span>
                 
               </Form>
             </Card>

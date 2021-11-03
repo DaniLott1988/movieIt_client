@@ -49,7 +49,7 @@ export class MainView extends React.Component {
 
   getUsers(token) {
     axios.get(`https://movie-it-1986.herokuapp.com/users`, {
-      headers: { Authorization: `Bearer $(token)` },
+      headers: { Authorization: `Bearer ${token}` },
     })
     .then((response) => {
       this.setState ({
@@ -64,7 +64,7 @@ export class MainView extends React.Component {
 
   getMovies(token) {
     axios.get('https://movie-it-1986.herokuapp.com/movies', {
-      headers: { Authorization: `Bearer ${token} `}
+      headers: { Authorization: `Bearer ${token}`}
     })
     .then(response => {
       this.setState({
@@ -124,7 +124,7 @@ export class MainView extends React.Component {
           }} />
 
           <Route path="/register" render={() => {
-            if (user) return <Redirect to="/" />
+            if (!user) return <Redirect to="/" />
             return <Col>
               <RegistrationView />
             </Col>
@@ -159,11 +159,11 @@ export class MainView extends React.Component {
               <DirectorView director={movies.find(m => m.Director.Name === match.params.name).Director} onBackClick={() => history.goBack()}/>
             </Col>
           }} />
-
-          <Route path="/profile" render={() => { 
-            if (!user) return <Col>
-              <ProfileView /> 
-            </Col>
+          
+          <Route exact path='/users/:Username' render={({ history }) => {
+            if (!user) return <LoginView onLoggedIn={(data) => this.onLoggedIn(data)} />;
+            if (movies.length === 0) return;
+            return <ProfileView history={history} movies={movies} />
           }} />
 
         </Row>

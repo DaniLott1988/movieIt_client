@@ -10,7 +10,6 @@ export class ProfileView extends React.Component {
     super();
 
     this.state = {
-      Name: null,
       Username: null,
       Password: null,
       Email: null,
@@ -156,10 +155,10 @@ export class ProfileView extends React.Component {
         <Card className="profile-card">
           <h2>Favorites Movies</h2>
           <Card.Body>
-            {Favorite_Movies.length === 0 && <div className="text-center">Empty.</div>}
+            {Favorite_Movies.length === 0 && <div className="text-center">No Favorite Movies Yet</div>}
 
             <div className="favorites-movies ">
-              {FavoriteMovies.length > 0 &&
+              {Favorite_Movies.length > 0 &&
                 movies.map((movie) => {
                   if (movie._id === FavoriteMovies.find((favMovie) => favMovie === movie._id)) {
                     return (
