@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Button, Card, CardGroup, Container, Col, Row, Stack } from 'react-bootstrap';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
 import axios from 'axios';
-import { useHistory } from "react-router-dom";
 import { Link } from 'react-router-dom';
 
 import './login-view.scss';
 
 export function LoginView(props) {
-  let history = useHistory();
+  
   const [Username, setUsername] = useState("");
   const [Password, setPassword] = useState("");
   const handleSubmit = (e) => {
@@ -47,13 +45,11 @@ export function LoginView(props) {
 
                   <Button variant="primary" type="submit" onClick={handleSubmit}>Submit</Button>
 
-                  <Router>
                     <p className="mt-5">
                       Curious? Go ahead and &nbsp;
                         <Link to="/register" className="btn btn-warning">register</Link>
                         &nbsp; to join today!
                     </p>
-                  </Router>
                 
                 </Form>
               </Stack>

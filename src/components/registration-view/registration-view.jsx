@@ -58,7 +58,7 @@ export function RegisterView(props) {
       isValid = false;
     }
 
-    if (Email.includes("@") ) {
+    if (!(Email && Email.includes(".") && Email.includes("@"))) {
       emailError = "Please enter a valid email address."
       isValid = false;
     }
@@ -71,6 +71,7 @@ export function RegisterView(props) {
     setUsernameError(usernameError);
     setPasswordError(passwordError);
     setEmailError(emailError);
+    setBirth_dateError(birth_dateError);
     return isValid;
 
   }
@@ -86,29 +87,57 @@ export function RegisterView(props) {
                 <Form.Group>
                   <Form.Label>Username:</Form.Label>
                   <Form.Control type="text" value={Username} required placeholder="Please write here your Username" onChange={e => setUsername(e.target.value)} />
+                  {Object.keys(usernameError).map((key) => {
+                    return (
+                      <div key={key}>
+                        {usernameError[key]}
+                      </div>
+                    );
+                  })}
                 </Form.Group>
       
                 <Form.Group>
                   <Form.Label>Password:</Form.Label>
                   <Form.Control type="password" value={Password} required placeholder="Please write here your password" onChange={e => setPassword(e.target.value)} />
+                  {Object.keys(passwordError).map((key) => {
+                    return (
+                      <div key={key}>
+                        {passwordError[key]}
+                      </div>
+                    );
+                  })}
                 </Form.Group>
                 
                 <Form.Group>
                   <Form.Label>Email:</Form.Label>
                   <Form.Control type="email" value={Email} required placeholder="Please write here your Email" onChange={e => setEmail(e.target.value)} />
+                  {Object.keys(emailError).map((key) => {
+                    return (
+                      <div key={key}>
+                        {emailError[key]}
+                      </div>
+                    );
+                  })}
                 </Form.Group>
                 
                 <Form.Group>
                   <Form.Label>Birth_date:</Form.Label>
                   <Form.Control type="date" value={Birth_date} required placeholder="Please write here your Birth_date" onChange={e => setBirth_date(e.target.value)} />
+                  {Object.keys(birth_dateError).map((key) => {
+                    return (
+                      <div key={key}>
+                        {birth_dateError[key]}
+                      </div>
+                    );
+                  })}
                 </Form.Group>
                 
                 <span>
                   <Button type="submit" onClick={handleSubmit}>Submit</Button>
                     {' '}
-                    <Link to="/">
+                  <Link to="/">
                     <Button variant="secondary" type="button">Back</Button>
-                    </Link>
+                  </Link>
                 </span>
                 
               </Form>
@@ -125,6 +154,7 @@ RegisterView.propTypes = {
   register: PropTypes.shape({
     Username: PropTypes.string.isRequired,
     Email: PropTypes.string.isRequired,
-    Password: PropTypes.string.isRequired
-  })
+    Password: PropTypes.string.isRequired,
+    Birth_date: PropTypes.string.isRequired
+  }),
 };
