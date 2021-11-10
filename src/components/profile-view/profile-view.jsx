@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Button, Card, Col, Form, Row } from 'react-bootstrap';
+
+import { setUser, updateUser } from '../../actions/actions';
+
 import './profile-view.scss';
 
 
@@ -70,13 +73,13 @@ export class ProfileView extends React.Component {
     const token = localStorage.getItem('token');
 
     axios.put(`https://movie-it-1986.herokuapp.com/users/${Username}`, {
-      Username: this.state.Username,
-      Password: this.state.Password,
-      Email: this.state.Email,
-      Birth_date: this.state.Birth_date
-    },
-    {
-      headers: { Authorization: `Bearer ${token}` }
+      headers: { Authorization: `Bearer ${token}` },
+      data: {
+        Username: newUsername ? newUsername : this.state.Username,
+        Password: newPassword ? newPassword : this.state.Password,
+        Email: newEmail ? newEmail : this.state.Email,
+        Birth_date: newBirth_date ? newBirth_date : this.state.Birth_date
+      },
     })
     .then((response) =>{
       alert('Saved Changes');
@@ -209,16 +212,11 @@ export class ProfileView extends React.Component {
   }
 }
 
-ProfileView.propTypes = {
-  user: PropTypes.shape({
-    FavoriteMovies: PropTypes.arrayOf(
-      PropTypes.shape({
-        _id: PropTypes.string.isRequired,
-        Title: PropTypes.string.isRequired,
-      })
-    ),
-    Username: PropTypes.string.isRequired,
-    Email: PropTypes.string.isRequired,
-    Birthdate: PropTypes.string,
-  }),
-};
+let mapStateToProps = state => {
+  return {
+    user: state.user,
+    movies: state.movies
+  }
+}
+
+export default connect(mapStateToProps, { setUser, updateUser })(ProfileView);

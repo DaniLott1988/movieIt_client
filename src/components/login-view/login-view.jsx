@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Form, Button, Card, CardGroup, Container, Col, Row, Stack } from 'react-bootstrap';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -61,9 +61,8 @@ export function LoginView(props) {
   );
 }
 
-LoginView.propTypes = {
-  user: PropTypes.shape({
-    username: PropTypes.string.isRequired,
-    password: PropTypes.string.isRequired,
-  }),
-}
+const mapDispatchToProps = (dispatch) => ({
+  handleSubmit: (Username, Password) => dispatch(handleSubmit(Username, Password))
+});
+
+export default connect(null, mapDispatchToProps)(LoginView);
