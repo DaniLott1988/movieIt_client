@@ -22,19 +22,19 @@ function MovieCard(props){
   }
 
   return (
-      <Container>
-        <Card className="Card">
-          <Card.Img variant="top" src={movie.ImagePath} crossOrigin="anonymous" />
-          <Card.Body>
-            <Card.Title>{movie.Title}</Card.Title>
-            <Card.Text>{movie.Description}</Card.Text>
-            <Link to={`/movies/${movie._id}`} >
-              <Button variant="link">Open</Button>
-            </Link>
-          </Card.Body>
-        </Card>
-      </Container>
-    );
+    <Container>
+      <Card className="Card">
+        <Card.Img variant="top" src={movie.ImagePath} crossOrigin="anonymous" />
+        <Card.Body>
+          <Card.Title>{movie.Title}</Card.Title>
+          <Card.Text>{movie.Description}</Card.Text>
+          <Link to={`/movies/${movie._id}`} >
+            <Button variant="link">Open</Button>
+          </Link>
+        </Card.Body>
+      </Card>
+    </Container>
+  );
 }
 
 export default connect(mapStateToProps)(MovieCard);
