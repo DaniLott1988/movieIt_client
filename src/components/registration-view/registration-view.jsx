@@ -1,45 +1,150 @@
 import React, { useState } from 'react';
-import PropTypes from "prop-types";
+import axios from 'axios';
+import { Form, Button, Card, CardGroup, Container, Col, Row } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
-export function RegistrationView(props) {
+import './registration-view.scss';
+
+export function RegisterView(props) {
+
   const [Username, setUsername] = useState("");
   const [Password, setPassword] = useState("");
   const [Email, setEmail] = useState("");
   const [Birth_date, setBirth_date] = useState("");
+
+  const [usernameError, setUsernameError] = useState({});
+  const [passwordError, setPasswordError] = useState({});
+  const [emailError, setEmailError] = useState({});
+  const [birth_dateError, setBirth_dateError] = useState({});
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(Username, Password, Email, Birth_date);
-    props.onRegistration(Username);
+    let setisValid = formValidation();
+    if (setisValid) {
+      axios.post('https://movie-it-1986.herokuapp.com/users', {
+        Username: Username,
+        Password: Password,
+        Email: Email,
+        Birth_date: Birth_date
+      })
+      .then(response => {
+        const data = response.data;
+        console.log(data);
+        window.open('/', 'self');
+      })
+      .catch(e => {
+        console.log('There was an error when registering the user.')
+      });
+    };
   }
+    
+
+  const formValidation = () => {
+    let usernameError = {}
+    let passwordError = {}
+    let emailError = {}
+    let birth_dateError = {}
+    let isValid = true;
+
+    if (Username.trim().length < 5) {
+      usernameError = "Username must only be of alphanumeric characters."
+      isValid = false;
+    }
+
+    if (Password.trim().length < 9) {
+      passwordError = "Password must have a minimum of 9 characters."
+      isValid = false;
+    }
+
+    if (!(Email && Email.includes(".") && Email.includes("@"))) {
+      emailError = "Please enter a valid email address."
+      isValid = false;
+    }
+
+    if (Birth_date === '' ) {
+      birth_dateError = "Please enter your date of Birth."
+      isValid = false;
+    }
+
+    setUsernameError(usernameError);
+    setPasswordError(passwordError);
+    setEmailError(emailError);
+    setBirth_dateError(birth_dateError);
+    return isValid;
+
+  }
+
   return (
-    <form>
-      <label className="username">
-        Username:
-        <input type="text" value={Username} onChange={e => setUsername(e.target.value)} />
-      </label>
-      <label className="password">
-        Password:
-        <input type="password" value={Password} onChange={e => setPassword(e.target.value)} />
-      </label>
-      <label className="email">
-        Email:
-        <input type="email" value={Email} onChange={e => setEmail(e.target.value)} />
-      </label>
-      <label className="birth_date">
-        Birth_date:
-        <input type="date" value={Birth_date} onChange={e => setBirth_date(e.target.value)} />
-      </label>
-      <button type="submit" onClick={handleSubmit}>Submit</button>
-    </form>
+    <Container>
+      <Row>
+        <Col className="justify-content-md-center">
+          <CardGroup>
+            <Card>
+              <Card.Header>Please Register:</Card.Header>
+              <Form>
+                <Form.Group>
+                  <Form.Label>Username:</Form.Label>
+                  <Form.Control type="text" value={Username} required placeholder="Please write here your Username" onChange={e => setUsername(e.target.value)} />
+                  {Object.keys(usernameError).map((key) => {
+                    return (
+                      <div key={key}>
+                        {usernameError[key]}
+                      </div>
+                    );
+                  })}
+                </Form.Group>
+      
+                <Form.Group>
+                  <Form.Label>Password:</Form.Label>
+                  <Form.Control type="password" value={Password} required placeholder="Please write here your password" onChange={e => setPassword(e.target.value)} />
+                  {Object.keys(passwordError).map((key) => {
+                    return (
+                      <div key={key}>
+                        {passwordError[key]}
+                      </div>
+                    );
+                  })}
+                </Form.Group>
+                
+                <Form.Group>
+                  <Form.Label>Email:</Form.Label>
+                  <Form.Control type="email" value={Email} required placeholder="Please write here your Email" onChange={e => setEmail(e.target.value)} />
+                  {Object.keys(emailError).map((key) => {
+                    return (
+                      <div key={key}>
+                        {emailError[key]}
+                      </div>
+                    );
+                  })}
+                </Form.Group>
+                
+                <Form.Group>
+                  <Form.Label>Birth_date:</Form.Label>
+                  <Form.Control type="date" value={Birth_date} required placeholder="Please write here your Birth_date" onChange={e => setBirth_date(e.target.value)} />
+                  {Object.keys(birth_dateError).map((key) => {
+                    return (
+                      <div key={key}>
+                        {birth_dateError[key]}
+                      </div>
+                    );
+                  })}
+                </Form.Group>
+                
+                <span>
+                  <Button type="submit" onClick={handleSubmit}>Submit</Button>
+                    {' '}
+                  <Link to="/">
+                    <Button variant="secondary" type="button">Back</Button>
+                  </Link>
+                </span>
+                
+              </Form>
+            </Card>
+          </CardGroup>
+        </Col>
+      </Row>
+    </Container>
+    
   );
 }
-
-RegistrationView.propTypes = {
-  register: PropTypes.shape({
-    Username: PropTypes.string.isRequired,
-    Password: PropTypes.string.isRequired,
-    Email: PropTypes.string.isRequired,
-    Birth_date: PropTypes.string.isRequired
-  }),
-  onRegistration: PropTypes.func.isRequired,
-};
